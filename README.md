@@ -1,5 +1,5 @@
 # PENPALS-SQA2025-AUBURN
-Group project for Auburn's Software Quality Assurance class COMP5710.\
+Group project for Auburn's Software Quality Assurance class COMP5710.
 
 
 Team Name: Pen Pals\
