@@ -34,6 +34,8 @@ After each task was completed, we worked together to push the files onto our Git
 - Implemented a Git pre-commit hook that runs a security scan on all `.py` files.
 - Used `bandit` to detect security vulnerabilities.
 - Configured the hook to generate a report of findings into `bandit_report.csv`.
+  ![4a_1](4a_1.png "4a_1")
+  ![4a_2](4a_2.png "4a_2")
 - The hook triggers automatically every time any Python file within the project is changed and committed.
 
 #### 4b. Fuzz Testing (`fuzz.py`)
