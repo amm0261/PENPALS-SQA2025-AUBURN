@@ -5,7 +5,26 @@ from parser import find_json_path_keys, count_initial_comment_line
 from graphtaint import getValidTaints
 from scanner import scanForResourceLimits, scanForSecrets
 
+'''
+find_json_path_keys
+The fuzzer shows that this function crashes with a TypeError when encountering dictionary keys that aren't strings.
+In particular, the tests show that it fails on floats, None, or a frozenset.
+Ideally, it should fail gracefully rather than terminating the process.
 
+count_initial_comment_line
+The fuzzer shows that this function crashes with a FileNotFoundError when given a file path that doesn't exist.
+As above, it propagates the error upwards rather than failing gracefully, potentially preventing the execution of any subsequent logic.
+
+getValidTaints
+The fuzzer shows that getValidTaints assumes every element in its input list is a two-tuple and attempts to unpack without validation, leading to ValueErrors for tuples of the wrong length and TypeErrors for non-iterable items (such as integers).
+
+scanForResourceLimits
+Similar to count_initial_comment_line, the fuzzer shows that scanForResourceLimits does not catch missing file errors and similarly fails with a propagating FileNotFoundError.
+
+scanForSecrets
+Finally, scanForSecrets actually worked extremely well, and none of the tested inputs crashed execution.
+While the console does show that an error occurs, this error is caught and execution continues, rather than the error propagating upwards and terminating the overall process.
+'''
 
 def fuzz(method, arguments, should_print_output = True, should_print_trace = False):
     
