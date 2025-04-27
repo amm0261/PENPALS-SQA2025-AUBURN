@@ -10,5 +10,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'  # You can specify '3.10' or '3.11' if you want
+
+      - name: Install required packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruamel.yaml
+
       - name: Run fuzz test script
         run: python KubeSec-master/fuzz.py  # Execute fuzz.py
