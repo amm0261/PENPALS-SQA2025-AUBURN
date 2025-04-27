@@ -18,4 +18,4 @@ jobs:
 
       - name: Run forensics.py
         run: |
-          python forensics.py
+          python KubeSec-master/forensics.py
