@@ -1,0 +1,14 @@
+name: Fuzz Testing
+
+on:
+  push: {}  # Trigger workflow on push
+
+jobs:
+  fuzz_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run fuzz test script
+        run: python fuzz.py  # Execute fuzz.py
