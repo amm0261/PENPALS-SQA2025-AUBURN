@@ -1,0 +1,48 @@
+#PEN PALS, Aidan Miller, Thomas Pohler, Jordyn Godsey
+
+echo "================="
+echo "Running Bandit Security Scan..."
+echo "=================" 
+
+REPORT_FILE="bandit_report.csv"
+
+bandit -r . -f csv -o "$REPORT_FILE"
+
+echo "================="
+echo "Bandit Scan Completed."
+echo "=================" 
+
+if grep -q "issue_severity" "$REPORT_FILE"; then
+    echo "================="
+    echo "⚠️ WARNING: Security issues found! See $REPORT_FILE for details."
+    echo "⚠️ Commit will still proceed, but please review and fix issues."
+    echo "================="
+else
+    echo "No security issues detected by Bandit."
+fi
+
+
+if git rev-parse --verify HEAD >/dev/null 2>&1
+then
+    against=HEAD
+else
+    against=$(git hash-object -t tree /dev/null)
+fi
+
+exec 1>&2
+
+allownonascii=$(git config --type=bool hooks.allownonascii)
+if [ "$allownonascii" != "true" ] &&
+   test $(git diff --cached --name-only --diff-filter=A -z $against |
+     LC_ALL=C tr -d '[ -~]\0' | wc -c) != 0
+then
+cat <<\EOF
+Error: Attempt to add a non-ASCII file name.
+This can cause problems across platforms.
+To disable this check: git config hooks.allownonascii true
+EOF
+    exit 1
+fi
+
+# Check for whitespace errors
+exec git diff-index --check --cached $against --
