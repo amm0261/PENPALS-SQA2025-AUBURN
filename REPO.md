@@ -46,12 +46,14 @@ After each task was completed, we worked together to push the files onto our Git
   - **getValidTaints**: crashes with invalid input types (ValueError, TypeError).
   - **scanForResourceLimits**: crashes with `FileNotFoundError` on missing files.
   - **scanForSecrets**: error is caught properly, does not crash.
+![4b](4b.png "4b")
 
 #### 4c. Forensics Integration (`forensics.py`)
 - Selected 5 Python methods and added forensic logging to each.
 - Logging includes timestamps, method execution results, and important variable states.
 - Created `forensics.py` to run and verify forensic logging.
 - Automated running of `forensics.py` via GitHub Actions.
+![4c](4c.png "4c")
 
 ---
 
