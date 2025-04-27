@@ -13,7 +13,7 @@ We split the work up between each team member as follows:
 - **4b.** Thomas Pohler
 - **4c.** Jordyn Godsey
 
-After each task was completed, we worked together to push the files onto our GitHub Repo and tested them.
+After completing these tasks, we then worked together to push the files onto our GitHub Repo and test them in a unified environment.
 
 ---
 
@@ -39,10 +39,11 @@ After each task was completed, we worked together to push the files onto our Git
 - The hook triggers automatically every time any Python file within the project is changed and committed.
 
 #### 4b. Fuzz Testing (`fuzz.py`)
-- Created a `fuzz.py` script that fuzzes 5 selected Python methods.
-- The script generates random or edge case inputs and captures crashes or exceptions.
+- Created a `fuzz.py` script that fuzzes 5 selected Python methods, based of a modified implementation of the simpleFuzzer from Workshop 7. The script takes as input a function name and a list of test data, which comprises all of the arguments that are intended to be sent to the function; functions are then fuzzed in a for-loop that goes through each of the arguments and inputs them into the function, allowing for many function executions with different types of inputs very quickly and easily.
+- Added some extra features to help with testing, such as whether there is an error is recorded in the "pass"/"fail" metrics, which print out after execution the percentage of test cases that passed. This can be disabled via the optional should_print_output parameter in the function; similarly, the optional should_print_stack_trace parameter determines whether the stack trace of errors should be printed to the console or not.
+- I had some slight issues with certain inputs crashing my make_temp_file() helper function and subsequently halting execution (since the make_temp_file() call is placed outside the fuzzer's try/catch blocks), but I otherwise did not have any serious difficulties building this fuzzer.
 - Integrated `fuzz.py` with GitHub Actions to run automatically during CI.
-- Documented bugs discovered:
+- Documented bugs discovered (also reported in further detail in a comment inside Fuzz.py):
   - **find_json_path_keys**: crashes on non-string dictionary keys (floats, None, frozenset).
   - **count_initial_comment_line**: crashes with `FileNotFoundError` when input file path doesn't exist.
   - **getValidTaints**: crashes with invalid input types (ValueError, TypeError).
