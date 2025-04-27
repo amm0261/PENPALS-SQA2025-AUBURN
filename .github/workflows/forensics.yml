@@ -1,0 +1,21 @@
+name: Forensics Testing
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on push events to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger the workflow on pull requests targeting the main branch
+
+jobs:
+  forensics_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run forensics.py
+        run: |
+          python forensics.py
